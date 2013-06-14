@@ -1,0 +1,22 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET		/test								com.beligum.cms.controllers.admin.Application.adminPanel()
+GET		/admin/reset						com.beligum.cms.controllers.admin.PageAdminController.resetCache()
+POST	/admin/save							com.beligum.cms.controllers.admin.PageAdminController.save()
+POST	/admin/create						com.beligum.cms.controllers.admin.PageAdminController.create()
+
+GET		/admin/dialog/changetitle/:id		com.beligum.cms.controllers.admin.PageAdminController.changeTitleDialog(id: Long)
+GET		/admin/dialog/changeurl/:id			com.beligum.cms.controllers.admin.PageAdminController.changeUrlDialog(id: Long)
+GET		/admin/dialog/changetemplate/:id	com.beligum.cms.controllers.admin.PageAdminController.changeTemplateDialog(id: Long)
+
+POST	/admin/changetitle/:id				com.beligum.cms.controllers.admin.PageAdminController.changeTitle(id: Long)
+POST	/admin/changeurl/:id				com.beligum.cms.controllers.admin.PageAdminController.changeUrl(id: Long)
+POST	/admin/changetemplate/:id			com.beligum.cms.controllers.admin.PageAdminController.changeTemplate(id: Long)
+POST	/admin/deletepage/:id				com.beligum.cms.controllers.admin.PageAdminController.deletePage(id: Long)
+
+
+
+#self made assetbuilder - http://stackoverflow.com/questions/15762484/assets-is-already-defined-as-object-assets
+GET     /javascript/routes      		com.beligum.cms.controllers.admin.Application.javascriptRoutes()
