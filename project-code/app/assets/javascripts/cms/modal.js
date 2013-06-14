@@ -87,8 +87,7 @@ t.modalModule = new (Class.extend
 		},
 
 		createModal : function(title, text, yes, no) {
-			cms.Modal
-					.createModalWithFunctions(title, text, yes, no, null, null);
+			cms.modalModule.createModalWithFunctions(title, text, yes, no, null, null);
 		}
 
 	}
