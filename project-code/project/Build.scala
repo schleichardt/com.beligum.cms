@@ -22,6 +22,6 @@ object ApplicationBuild extends Build {
     resolvers += Resolver.url("Objectify Play Repository", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns),
 	resolvers += Resolver.url("Objectify Play Snapshot Repository", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns), 
   	ebeanEnabled := true
-  ).dependsOn(coreProject)
+  ).dependsOn(coreProject).aggregate(coreProject)
 
 }
