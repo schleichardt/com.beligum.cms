@@ -1,0 +1,62 @@
+@(page: com.beligum.cms.managers.PageRenderer)
+
+@be.objectify.deadbolt.java.views.html.dynamic(com.beligum.core.login.security.UserRoles.ADMIN) {
+	<!-- Header files for cms system -->
+	<link rel="stylesheet" media="screen" href="@com.beligum.core.controllers.routes.Assets.at("stylesheets/cms/layouter.css")">
+	<script src="@com.beligum.cms.controllers.admin.routes.Application.javascriptRoutes" type="text/javascript" ></script>
+	
+	@Html(com.beligum.core.controllers.AssetPacker.pack(Array(
+		"javascripts/common/ckeditor/ckeditor.js",		
+		"javascripts/cms/config.js",
+		"javascripts/cms/actions.js",
+		"javascripts/cms/admin.js",
+		"javascripts/cms/block.js",
+		"javascripts/cms/clean.js",
+		"javascripts/cms/drag.js",
+		"javascripts/cms/drop.js",
+		"javascripts/cms/handle.js",
+		"javascripts/cms/manager.js",
+		"javascripts/cms/modal.js",
+		"javascripts/cms/core.js",
+		"javascripts/cms/registering.js"
+		
+	)))
+	
+	<!-- button to toggle the admin panel -> always visible -->
+	<div id="layouter-admin-toggle"><a class="layouter-admin-toggle-btn" href="javascript:void(0)" title="Show admin panel"><i class="icon-cogs icon-2x"></i></a></div>
+	
+	<div id="layouter-admin-panel" >
+		<!-- Fields to render when editing this page (When administrator is logged in) -->
+	   	<input type="hidden" id="cms-pageId" name="cms-pageId"  value="@page.getId()">
+	   	<input type="hidden" id="cms-language" name="cms-language"  value="@com.beligum.cms.I18.Language.getCurrentLanguage()">
+		
+			
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="/admin"><i class="icon-cogs"></i>&nbsp;&nbsp;admin panel</a>
+				<ul class="layouter-admin-nav nav">
+					<li><a class="layouter-save-btn" href="javascript:void(0)">save page</a></li>
+					<li><a class="layouter-create-btn" href="javascript:void(0)">create page</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle @(if (page.getId()==null) {"disabled"})" data-toggle="dropdown" href="#">page settings<b class="caret"></b></a>
+						@if(page.getId()!=null) {
+					  	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					  		<li><a class="layouter-change-title-btn" href="javascript:void(0)">change title</a></li>
+							<li><a class="layouter-change-url-btn" href="javascript:void(0)">change url</a></li>
+					  		<li><a class="layouter-change-template-btn" href="javascript:void(0)">change template</a></li>
+						</ul>
+						}
+					</li>
+    				<li><a href="/admin/logout">logout</a></li>
+					<!-- <li><a class="layouter-delete-btn" @if(page.getId()==null) {style='display:none'} href="javascript:cms.layout.Admin.deletePage()">Delete</a></li> -->
+				</ul>
+				<ul class="nav pull-right">
+    				<li class="divider-vertical"></li>
+    				<li><a class="close-btn layouter-admin-toggle-btn" href="javascript:void(0)"><i class="icon-2x icon-remove"></i></a></li>
+	    		</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div id="admin-dialog-window"></div>
+}

@@ -1,0 +1,201 @@
+/* See http://lesselements.com */
+@import "_elements.less";
+
+.resize-containment {
+	background-color: rgba(200, 0, 0, 0.2);
+}
+
+.toolbar {
+	margin-bottom: 15px;
+}
+
+
+#layout-window {
+	min-height: 20px;	
+}
+
+.layout-content {
+	position: relative;
+	margin: 5px 5px;
+	padding: 5px 5px;
+}
+
+.save-button {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	z-index: 9999;
+}
+
+.layout-content:hover .layout-content-btn-tool {
+	display: block;
+}
+
+.cke_editable:hover .layout-content-btn-tool {
+	display: none;
+}
+
+.layout-content .layout-content-btn-tool {
+	position: absolute;
+	display: none;
+	top: 0px;
+	right: 10px;
+	z-index: 999;
+}
+
+body.layout-mode .layout-content:hover {
+	background-color: rgba(135, 206, 255, 0.1);
+}
+
+.layout-toolbar {
+	position: absolute;
+	display: none;
+}
+
+.layout-window:hover .layout-toolbar,
+.layout-toolbar:hover {
+	display: block;
+}
+
+.layout-resizer {
+	position: absolute;
+	border: 1px solid #dedede;
+	background: #e7e7e7 url('../../images/splitter_ver.png') center center no-repeat;
+	cursor: col-resize;
+}
+
+.layout-paddinghandle {
+	position: absolute;
+	background-color: #dd2200;
+	border: 1px solid #de1100;
+	cursor: pointer;
+}
+
+.layout-drophandle-select {
+	position: absolute;
+	background-color: blue;
+}
+
+.layout-drophandle-select-label {
+	position: absolute;
+	background-color: rgb(0, 0, 205);
+}
+
+.layout-column {
+	position: relative;
+	
+	cursor: inherit;
+}
+
+.layout-row {
+	position: relative;
+	
+	cursor: inherit;
+}
+
+.layout-impact-object {
+	background-color: rgba(135, 206, 255, 0.4);
+}
+
+.layout-drop-object {
+}
+
+.layout-dragged-object {
+	background-color: rgba(200, 200, 200, 0.8);
+}
+
+.layout-drop-content {
+	background-color: rgba(200,0,0, 0.3);
+	border-top: 1px solid black;
+	border-left: 1px solid black;
+	
+}
+
+.layout-drophandle-left {
+	position: absolute;
+	border-left: 1px dotted gray;
+}
+
+.layout-drophandle-top {
+	position: absolute;
+	border-top: 1px dotted gray;
+}
+
+.layout-drophandle-right {
+	position: absolute;
+	border-left: 1px dotted gray;
+}
+
+.layout-drophandle-bottom {
+	position: absolute;
+	border-bottom: 1px dotted gray;
+}
+
+.layout-drophandle-label {
+	position: absolute;
+}
+
+.dragger {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 25px;
+	height: 25px;
+	background-color: blue;
+}
+
+/* admin panel */
+#layouter-admin-toggle {
+	z-index: 9999;
+	position: fixed;
+	top: 8px;
+	right: 10px;
+}
+#layouter-admin-toggle i {
+	color: rgba(0, 0, 0, 0.5);
+}
+#layouter-admin-panel {
+	display: none;
+	z-index: 9998;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+}
+#layouter-admin-panel .navbar-inner {
+	/* override bootstrap to make only the parent transparent */
+	@alpha: 0.50;
+	background-color: rgba(250, 250, 250, @alpha);
+	
+	@fromColor: rgba(255, 255, 255, @alpha);
+	@toColor: rgba(242, 242, 242, @alpha);
+	background-image: -moz-linear-gradient(top, @fromColor, @toColor);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@fromColor), to(@toColor));
+	background-image: -webkit-linear-gradient(top, @fromColor, @toColor);
+	background-image: -o-linear-gradient(top, @fromColor, @toColor);
+	background-image: linear-gradient(to bottom, @fromColor, @toColor);
+	
+	border: 1px solid rgba(212, 212, 212, @alpha);
+	
+	padding-right: 7px;
+}
+#layouter-admin-panel .navbar .brand {
+	font-variant: small-caps;
+}
+#layouter-admin-panel .navbar a.close-btn {
+	padding: 5px 0px 5px 0px;
+}
+#layouter-admin-panel .navbar a.close-btn:hover i {
+	color: firebrick;
+	.transition(0.4s, ease-out);
+}
+#layouter-admin-panel .navbar .divider-vertical {
+	border-right: 1px solid #EEEEEE;
+	border-left: 1px solid #AAAAAA;
+}
+.layouter-admin-nav {
+	margin-left: 40px;
+}
+
+#layouter-admin-panel .navbar-inner li a.disabled {
+	color: rgba(119, 119, 119, 0.5);
+}
