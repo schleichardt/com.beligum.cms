@@ -1,0 +1,5 @@
+GET     /assets/cms/*file					com.beligum.cms.Assets.at(path="/public/com/beligum/cms", file)
+GET     /assets/core/*file					com.beligum.core.Assets.at(path="/public/com/beligum/core", file)
+
+->		/		com.beligum.cms.admin.Routes
+->		/		com.beligum.cms.pages.Routes

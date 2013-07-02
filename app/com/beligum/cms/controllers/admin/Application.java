@@ -4,7 +4,7 @@ import play.Routes;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.beligum.cms.managers.PageRenderer;
+import com.beligum.cms.utils.PageRenderer;
 
 public class Application extends Controller
 {

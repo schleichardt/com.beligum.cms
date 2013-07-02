@@ -5,9 +5,9 @@ import play.i18n.Lang;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import com.beligum.cms.I18.Language;
-import com.beligum.cms.managers.PageManager;
-import com.beligum.cms.managers.PageRenderer;
+import com.beligum.cms.data.Language;
+import com.beligum.cms.utils.PageManager;
+import com.beligum.cms.utils.PageRenderer;
 
 public class PageController extends Controller
 {

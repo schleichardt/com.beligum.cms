@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import models.Page;
-import models.Template;
 
 import org.codehaus.jackson.JsonNode;
 
@@ -17,11 +15,13 @@ import play.mvc.Http.Request;
 import play.mvc.Result;
 import be.objectify.deadbolt.java.actions.Dynamic;
 
-import com.beligum.cms.managers.PageManager;
-import com.beligum.cms.repository.BlockRepository;
-import com.beligum.cms.url.UrlRouter;
-import com.beligum.core.login.security.UserRoles;
-import com.beligum.core.models.repositories.BasicRepository;
+import com.beligum.cms.models.Page;
+import com.beligum.cms.models.Template;
+import com.beligum.cms.repositories.BlockRepository;
+import com.beligum.cms.utils.PageManager;
+import com.beligum.cms.utils.UrlRouter;
+import com.beligum.core.utils.security.UserRoles;
+import com.beligum.core.repositories.BasicRepository;
 import com.beligum.core.utils.Cacher;
 
 @Dynamic(UserRoles.ADMIN)

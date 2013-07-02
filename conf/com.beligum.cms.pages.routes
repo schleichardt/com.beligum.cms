@@ -1,0 +1,1 @@
+GET		/*urlName							com.beligum.cms.controllers.pages.PageController.show(urlName: String)

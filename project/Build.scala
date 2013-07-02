@@ -8,20 +8,28 @@ object ApplicationBuild extends Build {
   val appVersion      = "1.0-SNAPSHOT"
 
   val appDependencies = Seq(
-    // Add your project dependencies here,
-    javaCore,
+  	javaCore,
     javaJdbc,
     javaEbean,
-    "mysql" % "mysql-connector-java" % "5.1.18",
-	 "commons-io" % "commons-io" % "1.3.2",
-	 "be.objectify" %% "deadbolt-java" % "2.1-RC2"
+    "com.beligum" %% "com_beligum_core" % "1.0-SNAPSHOT",
+    "com.hp.gagawa" % "gagawa" % "1.0.1",
+    "com.yahoo.platform.yui" % "yuicompressor" % "2.4.7"            
   )
-  val coreProject = RootProject(file("../com.beligum.core"))
+  
+  //val coreProject = RootProject(file("../com.beligum.core.play"))
+  
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    // Add your own project settings here
+    organization := "com.beligum",
+    publishArtifact in(Compile, packageDoc) := false,
+    sources in doc in Compile := List(),
+    com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.skipParents in ThisBuild := false,
+    com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.withSource := true,
+    
     resolvers += Resolver.url("Objectify Play Repository", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns),
-	resolvers += Resolver.url("Objectify Play Snapshot Repository", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns), 
-  	ebeanEnabled := true
-  ).dependsOn(coreProject).aggregate(coreProject)
+    resolvers += Resolver.url("Objectify Play Snapshot Repository", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns),
+    
+    templatesImport ++= Seq("java.util._", "com.beligum._")
+    
+  )//.dependsOn(coreProject)
 
 }

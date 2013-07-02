@@ -1,11 +1,10 @@
-@(page: com.beligum.cms.managers.PageRenderer)
+@(page: cms.utils.PageRenderer)
 
-@be.objectify.deadbolt.java.views.html.dynamic(com.beligum.core.login.security.UserRoles.ADMIN) {
-	<!-- Header files for cms system -->
-	<link rel="stylesheet" media="screen" href="@com.beligum.core.controllers.routes.Assets.at("stylesheets/cms/layouter.css")">
-	<script src="@com.beligum.cms.controllers.admin.routes.Application.javascriptRoutes" type="text/javascript" ></script>
+@be.objectify.deadbolt.java.views.html.dynamic(core.utils.security.UserRoles.ADMIN) {
+	<link rel="stylesheet" media="screen" href="@cms.routes.Assets.at("stylesheets/cms/layouter.css")">
+	<script src="@cms.controllers.admin.routes.Application.javascriptRoutes" type="text/javascript" ></script>
 	
-	@Html(com.beligum.core.controllers.AssetPacker.pack(Array(
+	@Html(core.utils.AssetPacker.pack(Array(
 		"javascripts/common/ckeditor/ckeditor.js",		
 		"javascripts/cms/config.js",
 		"javascripts/cms/actions.js",
@@ -28,7 +27,7 @@
 	<div id="layouter-admin-panel" >
 		<!-- Fields to render when editing this page (When administrator is logged in) -->
 	   	<input type="hidden" id="cms-pageId" name="cms-pageId"  value="@page.getId()">
-	   	<input type="hidden" id="cms-language" name="cms-language"  value="@com.beligum.cms.I18.Language.getCurrentLanguage()">
+	   	<input type="hidden" id="cms-language" name="cms-language"  value="@cms.data.Language.getCurrentLanguage()">
 		
 			
 		<div class="navbar">
