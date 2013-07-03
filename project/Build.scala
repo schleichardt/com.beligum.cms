@@ -25,10 +25,7 @@ object ApplicationBuild extends Build {
     com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.skipParents in ThisBuild := false,
     com.typesafe.sbteclipse.core.EclipsePlugin.EclipseKeys.withSource := true,
     
-    resolvers += Resolver.url("Objectify Play Repository", url("http://schaloner.github.com/releases/"))(Resolver.ivyStylePatterns),
-    resolvers += Resolver.url("Objectify Play Snapshot Repository", url("http://schaloner.github.com/snapshots/"))(Resolver.ivyStylePatterns),
-    
-    templatesImport ++= Seq("java.util._", "com.beligum._")
+    templatesImport ++= Seq("com.beligum._")
     
   )//.dependsOn(coreProject)
 
