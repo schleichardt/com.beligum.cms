@@ -19,7 +19,7 @@ import com.beligum.cms.models.PageBlock;
 import com.beligum.cms.models.PageNotFoundPage;
 import com.beligum.cms.repositories.BlockRepository;
 import com.beligum.cms.utils.templating.LayoutWindow;
-import com.beligum.core.utils.security.UserManager;
+import com.beligum.core.accounts.UserManager;
 import com.beligum.core.utils.security.UserRoles;
 
 public class PageRenderer
