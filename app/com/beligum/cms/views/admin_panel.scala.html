@@ -1,11 +1,8 @@
 @(page: cms.utils.PageRenderer)
 
 @be.objectify.deadbolt.java.views.html.dynamic(core.utils.security.UserRoles.ADMIN) {
-	<link rel="stylesheet" media="screen" href="@cms.routes.Assets.at("stylesheets/layouter.css")">
-	<link rel="stylesheet" media="screen" href="@cms.routes.Assets.at("stylesheets/font-awesome.css")">
 	
 	<script src="@cms.controllers.admin.routes.Application.javascriptRoutes" type="text/javascript" ></script>
-	
 	<script src="@cms.routes.Assets.at("javascripts/ckeditor/ckeditor.js")" type="text/javascript" ></script>
 	<script src="@cms.routes.Assets.at("javascripts/config.js")" type="text/javascript" ></script>
 	<script src="@cms.routes.Assets.at("javascripts/actions.js")" type="text/javascript" ></script>

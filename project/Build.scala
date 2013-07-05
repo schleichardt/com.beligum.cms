@@ -11,12 +11,12 @@ object ApplicationBuild extends Build {
   	javaCore,
     javaJdbc,
     javaEbean,
-    //"com.beligum" %% "com_beligum_core" % "1.0-SNAPSHOT",
+    "com.beligum" %% "com_beligum_core" % "1.0-SNAPSHOT",
     "com.hp.gagawa" % "gagawa" % "1.0.1",
     "com.yahoo.platform.yui" % "yuicompressor" % "2.4.7"            
   )
   
-  val coreProject = RootProject(file("../com.beligum.core.play"))
+  //val coreProject = RootProject(file("../com.beligum.core.play"))
   
   val main = play.Project(appName, appVersion, appDependencies).settings(
     organization := "com.beligum",
@@ -27,6 +27,6 @@ object ApplicationBuild extends Build {
     
     templatesImport ++= Seq("com.beligum._")
     
-  ).dependsOn(coreProject).aggregate(coreProject)
+  )//.dependsOn(coreProject)
 
 }
