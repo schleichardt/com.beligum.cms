@@ -22,9 +22,11 @@ public class PageController extends Controller
 	Result retVal = badRequest(com.beligum.cms.views.html.error.fatal_error.render());
 	Lang lang = Language.getLanguageForUrl(url);
 
-	if (url == null || url.trim().equals("")) {
-	    retVal = redirect("/");
-	} else if (lang != null) {
+	if (url == null) {
+	    url = "";
+	}
+	url = url.trim();
+	if (lang != null) {
 
 	    // Get the correct page for this url in the correct language
 	    PageRenderer pageRenderer = new PageRenderer(url);

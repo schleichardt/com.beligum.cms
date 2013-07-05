@@ -1,15 +1,16 @@
-GET		/admin/reset						com.beligum.cms.controllers.admin.PageAdminController.resetCache()
-POST	/admin/save							com.beligum.cms.controllers.admin.PageAdminController.save()
-POST	/admin/create						com.beligum.cms.controllers.admin.PageAdminController.create()
+GET		/reset						com.beligum.cms.controllers.admin.PageAdminController.resetCache()
+POST	/save							com.beligum.cms.controllers.admin.PageAdminController.save()
+POST	/create						com.beligum.cms.controllers.admin.PageAdminController.create()
 
-GET		/admin/dialog/changetitle/:id		com.beligum.cms.controllers.admin.PageAdminController.changeTitleDialog(id: Long)
-GET		/admin/dialog/changeurl/:id			com.beligum.cms.controllers.admin.PageAdminController.changeUrlDialog(id: Long)
-GET		/admin/dialog/changetemplate/:id	com.beligum.cms.controllers.admin.PageAdminController.changeTemplateDialog(id: Long)
+GET		/dialog/changetitle/:id		com.beligum.cms.controllers.admin.PageAdminController.changeTitleDialog(id: Long)
+GET		/dialog/changeurl/:id			com.beligum.cms.controllers.admin.PageAdminController.changeUrlDialog(id: Long)
+GET		/dialog/changetemplate/:id	com.beligum.cms.controllers.admin.PageAdminController.changeTemplateDialog(id: Long)
 
-POST	/admin/changetitle/:id				com.beligum.cms.controllers.admin.PageAdminController.changeTitle(id: Long)
-POST	/admin/changeurl/:id				com.beligum.cms.controllers.admin.PageAdminController.changeUrl(id: Long)
-POST	/admin/changetemplate/:id			com.beligum.cms.controllers.admin.PageAdminController.changeTemplate(id: Long)
-POST	/admin/deletepage/:id				com.beligum.cms.controllers.admin.PageAdminController.deletePage(id: Long)
+POST	/changetitle/:id				com.beligum.cms.controllers.admin.PageAdminController.changeTitle(id: Long)
+POST	/changeurl/:id				com.beligum.cms.controllers.admin.PageAdminController.changeUrl(id: Long)
+POST	/changetemplate/:id			com.beligum.cms.controllers.admin.PageAdminController.changeTemplate(id: Long)
+POST	/deletepage/:id				com.beligum.cms.controllers.admin.PageAdminController.deletePage(id: Long)
 
-#self made assetbuilder - http://stackoverflow.com/questions/15762484/assets-is-already-defined-as-object-assets
-GET     /javascript/routes      			com.beligum.cms.controllers.admin.Application.javascriptRoutes()
+#we put the javascript routes here because we want them with the other admin routes
+GET     /assets/cms/javascript/routes      		com.beligum.cms.controllers.admin.Application.javascriptRoutes()
+

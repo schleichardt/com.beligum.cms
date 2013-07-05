@@ -1,5 +1,4 @@
-GET     /assets/cms/*file					com.beligum.cms.Assets.at(path="/public", file)
-GET     /assets/core/*file					com.beligum.core.Assets.at(path="/public", file)
-
-->		/		com.beligum.cms.admin.Routes
-->		/		com.beligum.cms.pages.Routes
+-> 		/				com.beligum.core.all.Routes
+->		/admin			com.beligum.cms.admin.Routes
+->		/assets			com.beligum.cms.assets.Routes	
+->		/				com.beligum.cms.pages.Routes

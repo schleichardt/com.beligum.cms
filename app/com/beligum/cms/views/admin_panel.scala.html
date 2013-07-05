@@ -1,25 +1,25 @@
 @(page: cms.utils.PageRenderer)
 
 @be.objectify.deadbolt.java.views.html.dynamic(core.utils.security.UserRoles.ADMIN) {
-	<link rel="stylesheet" media="screen" href="@cms.routes.Assets.at("stylesheets/cms/layouter.css")">
+	<link rel="stylesheet" media="screen" href="@cms.routes.Assets.at("stylesheets/layouter.css")">
+	<link rel="stylesheet" media="screen" href="@cms.routes.Assets.at("stylesheets/font-awesome.css")">
+	
 	<script src="@cms.controllers.admin.routes.Application.javascriptRoutes" type="text/javascript" ></script>
 	
-	@Html(core.utils.AssetPacker.pack(Array(
-		"javascripts/common/ckeditor/ckeditor.js",		
-		"javascripts/cms/config.js",
-		"javascripts/cms/actions.js",
-		"javascripts/cms/admin.js",
-		"javascripts/cms/block.js",
-		"javascripts/cms/clean.js",
-		"javascripts/cms/drag.js",
-		"javascripts/cms/drop.js",
-		"javascripts/cms/handle.js",
-		"javascripts/cms/manager.js",
-		"javascripts/cms/modal.js",
-		"javascripts/cms/core.js",
-		"javascripts/cms/registering.js"
-		
-	)))
+	<script src="@cms.routes.Assets.at("javascripts/ckeditor/ckeditor.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/config.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/actions.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/admin.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/block.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/clean.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/drag.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/drop.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/handle.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/manager.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/modal.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/core.js")" type="text/javascript" ></script>
+	<script src="@cms.routes.Assets.at("javascripts/registering.js")" type="text/javascript" ></script>
+	
 	
 	<!-- button to toggle the admin panel -> always visible -->
 	<div id="layouter-admin-toggle"><a class="layouter-admin-toggle-btn" href="javascript:void(0)" title="Show admin panel"><i class="icon-cogs icon-2x"></i></a></div>
@@ -32,7 +32,7 @@
 			
 		<div class="navbar">
 			<div class="navbar-inner">
-				<a class="brand" href="/admin"><i class="icon-cogs"></i>&nbsp;&nbsp;admin panel</a>
+				<a class="brand" href="/admin"><i class="icon-cog"></i>&nbsp;&nbsp;admin panel</a>
 				<ul class="layouter-admin-nav nav">
 					<li><a class="layouter-save-btn" href="javascript:void(0)">save page</a></li>
 					<li><a class="layouter-create-btn" href="javascript:void(0)">create page</a></li>
@@ -46,7 +46,7 @@
 						</ul>
 						}
 					</li>
-    				<li><a href="/admin/logout">logout</a></li>
+    				<li><a href="/accounts/logout">logout</a></li>
 					<!-- <li><a class="layouter-delete-btn" @if(page.getId()==null) {style='display:none'} href="javascript:cms.layout.Admin.deletePage()">Delete</a></li> -->
 				</ul>
 				<ul class="nav pull-right">

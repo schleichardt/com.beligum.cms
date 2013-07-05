@@ -1,0 +1,2 @@
+#self made assetbuilder - http://stackoverflow.com/questions/15762484/assets-is-already-defined-as-object-assets
+GET     /cms/*file							com.beligum.cms.Assets.at(path="/public/com/beligum/cms", file)
