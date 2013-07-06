@@ -246,8 +246,6 @@ t.handle = new (Class.extend
 					cms.handle._drawDropHandle($(this), cms.config.SIDE_BOTTOM);
 				});
 		
-		// Expand the height of the content blocks so they fill the full column
-		cms.core.fillColumnWithLastContent($(this));
 		
 	},
 

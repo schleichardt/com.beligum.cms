@@ -54,9 +54,9 @@ t.core = new (Class.extend
 				var editor = CKEDITOR.instances[key];
 				retVal = editor.focusManager.blur();
 				editor.destroy();
+				
 			}
-			$("." + cms.config.CLASS_CONTENT).removeAttr(
-					"contenteditable", "false");
+			$("." + cms.config.CLASS_CONTENT).removeAttr("contenteditable", "false");
 		},
 
 		enableEditorInstances : function() {
@@ -65,7 +65,9 @@ t.core = new (Class.extend
 			$("." + cms.config.CLASS_CONTENT).each(function() {
 				$(this).attr("contenteditable", "true");
 				cms.core.createEditorInstance($(this));
+				
 			});
+			
 		},
 
 		isEditing : function() {
@@ -85,6 +87,7 @@ t.core = new (Class.extend
 			 * http://dev.ckeditor.com/ticket/10042
 			 */
 			CKEDITOR.inline(element.attr('id'));
+			
 		},
 
 		escEditorInstance : function(element) {
@@ -152,6 +155,7 @@ t.core = new (Class.extend
 		fillColumnWithLastContent : function() {
 			// for each row find the talles column
 			// set height for other columns in that row to the same height
+			Logger.debug("Stretch columns to full height");
 			$("." + cms.config.CLASS_ROW).height("auto");
 			$("." + cms.config.CLASS_COLUMN).height("auto");
 			$("." + cms.config.CLASS_CONTENT).height("auto");
@@ -182,20 +186,19 @@ t.core = new (Class.extend
 		},
 
 		_matchHeightWithParent : function(element) {
+			//Exit recursive loop at top level
 			if (element.parent().hasClass(cms.config.CLASS_WINDOW)
 					|| element.hasClass(cms.config.CLASS_WINDOW)) {
 				return;
 			}
 
-			var parentHeight = element.parent().height()
-					- (parseFloat(element.css("marginTop")) + parseFloat(element
-							.css("marginBottom")))
-			if (element.position().top + element.height() < parentHeight) {
-				var elementBottom = element.position().top + element.height();
+			var parentHeight = element.parent().outerHeight(false);
+			if (element.position().top + element.outerHeight(true) < parentHeight) {
+				var elementBottom = element.position().top + element.outerHeight(true);
 				var parentBottom = parentHeight;
 				var diffHeight = parentBottom - elementBottom;
-				diffHeight -= (parseFloat(element.css("marginTop")) + parseFloat(element
-						.css("marginBottom")));
+				//diffHeight -= (parseFloat(element.css("marginTop")) + parseFloat(element
+				//		.css("marginBottom")));
 
 				if (diffHeight > 0) {
 					element.height(element.height() + diffHeight);
