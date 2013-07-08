@@ -291,6 +291,11 @@ public class PageRenderer
 	    return null;
 	}
     }
+    
+    public Html renderBlock()
+    {
+	return this.renderBlock(null);
+    }
 
     public Html renderBlock(String className)
     {
