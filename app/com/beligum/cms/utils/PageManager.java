@@ -31,7 +31,6 @@ import play.api.templates.Html;
 import play.i18n.Lang;
 
 import com.avaje.ebean.Ebean;
-import com.beligum.cms.data.Language;
 import com.beligum.cms.exception.CmsException;
 import com.beligum.cms.models.Block;
 import com.beligum.cms.models.Page;

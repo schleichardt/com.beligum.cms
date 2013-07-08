@@ -16,14 +16,13 @@
  * Contributors:
  *     Beligum - initial implementation
  *******************************************************************************/
-package com.beligum.cms.data;
+package com.beligum.cms.utils;
 
 import java.util.Locale;
 
 import play.i18n.Lang;
 import play.mvc.Http;
 
-import com.beligum.cms.utils.PageManager;
 
 public class Language
 {

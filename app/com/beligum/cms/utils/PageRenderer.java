@@ -30,7 +30,6 @@ import play.i18n.Lang;
 import play.i18n.Messages;
 import play.mvc.Http;
 
-import com.beligum.cms.data.Language;
 import com.beligum.cms.models.Block;
 import com.beligum.cms.models.Page;
 import com.beligum.cms.models.PageBlock;
