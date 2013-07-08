@@ -1,2 +1,2 @@
-GET		/						com.beligum.cms.controllers.pages.PageController.show(urlName: String ?= "")
 GET		/*urlName				com.beligum.cms.controllers.pages.PageController.show(urlName: String)
+GET		/				com.beligum.cms.controllers.pages.PageController.show(urlName: String ?= "")

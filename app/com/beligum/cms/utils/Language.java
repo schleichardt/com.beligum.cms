@@ -34,13 +34,13 @@ public class Language
     private static Lang masterLanguage;
 
     static {
-
-	String masterLang = play.Play.application().configuration().getString("com.beligum.cms.default_language");
-	if (masterLang != null) {
-	    masterLanguage = Lang.forCode(masterLang);
-	} else {
-	    throw new RuntimeException("No default language found in application.conf");
-	}
+	masterLanguage = Lang.availables().get(0);
+//	//String masterLang = play.Play.application().configuration().getString("com.beligum.cms.default_language");
+//	if (masterLang != null) {
+//	    masterLanguage = Lang.forCode(masterLang);
+//	} else {
+//	    throw new RuntimeException("No default language found in application.conf");
+//	}
     }
 
     // -----PUBLIC FUNCTIONS-----
