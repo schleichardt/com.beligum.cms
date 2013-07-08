@@ -36,16 +36,19 @@ t.drag = new (Class.extend
 						return false;
 					}
 					$("body").css("cursor", "move");
+					// Move the draghelper to the body so absolute position is always absolute to page
+					$("body").append($("#drag-helper"));
 					cms.core.isDragging = true;
 					cms.core.setLayoutWindowForBlock(block);
 					if (cms.config.LAYOUT_WINDOW.find("."
 							+ cms.config.CLASS_CONTENT).length == 1) {
-						// if this is the onnly element then you can not drop it
+						// if this is the only element then you can not drop it
 						$("#drag-helper").html("You can not drag this block");
 					} else {
 						$("#drag-helper").html(
 								"This block will be dropped on the blue line");
 					}
+					
 					cms.core.hoverObject = block;
 					cms.handle.removeResizeHandles();
 				},

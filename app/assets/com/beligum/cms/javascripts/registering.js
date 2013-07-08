@@ -229,7 +229,7 @@ t.registering = new (Class.extend
 							cms.config.SIDE_BOTTOM)
 							+ '-extra';
 
-					$('.' + cms.config.CLASS_CONTENT).css('height', 'auto');
+					//$('.' + cms.config.CLASS_CONTENT).css('height', 'auto');
 				},
 
 				_addDropData : function() {

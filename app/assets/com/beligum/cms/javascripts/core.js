@@ -155,7 +155,7 @@ t.core = new (Class.extend
 		fillColumnWithLastContent : function() {
 			// for each row find the talles column
 			// set height for other columns in that row to the same height
-			Logger.debug("Stretch columns to full height");
+			
 			$("." + cms.config.CLASS_ROW).height("auto");
 			$("." + cms.config.CLASS_COLUMN).height("auto");
 			$("." + cms.config.CLASS_CONTENT).height("auto");
@@ -163,6 +163,7 @@ t.core = new (Class.extend
 			$("." + cms.config.CLASS_WINDOW).each(function() {
 				cms.core.stretchBlocksToMaxHeight($(this));
 			});
+			Logger.debug("Stretched columns to full height");
 
 		},
 

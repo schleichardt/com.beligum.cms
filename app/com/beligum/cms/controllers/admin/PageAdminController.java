@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.codehaus.jackson.JsonNode;
 
 import play.data.Form;
@@ -39,6 +38,7 @@ import com.beligum.cms.repositories.BlockRepository;
 import com.beligum.cms.utils.PageManager;
 import com.beligum.cms.utils.UrlRouter;
 import com.beligum.core.utils.security.UserRoles;
+import com.beligum.core.models.User;
 import com.beligum.core.repositories.BasicRepository;
 import com.beligum.core.utils.Cacher;
 
@@ -73,43 +73,54 @@ public class PageAdminController extends Controller
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
 	Result retVal = null;
 	try {
+	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
+		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
+		jsonObject.put("ok", false);
+		jsonObject.put("error", "This is a demo version. Saving is not supported");
+		retVal = ok(toJson(jsonObject));
+	    } else {
+		Page updatedPage = play.libs.Json.fromJson(jsonNode, Page.class);
+		Page savedPage = PageManager.savePage(updatedPage);
+		jsonObject.put("ok", true);
 
-	    Page updatedPage = play.libs.Json.fromJson(jsonNode, Page.class);
-	    Page savedPage = PageManager.savePage(updatedPage);
-	    jsonObject.put("ok", true);
-
-	    retVal = ok(toJson(jsonObject));
+		retVal = ok(toJson(jsonObject));
+	    }
 	} catch (Exception e) {
-	    // FlashHelper.addError("An error occured. Page could not be saved");
-	    Map<String, String> error = new HashMap<String, String>();
-	    error.put("error", "An error occured. Page could not be saved: " + e.getMessage());
-	    retVal = badRequest(toJson(error));
+	    jsonObject.put("ok", false);
+	    jsonObject.put("error", "An error occured. Page could not be saved: " + e.getMessage());
+	    retVal = ok(toJson(jsonObject));
 	}
 	return retVal;
     }
-
 
     public static Result deletePage(Long id)
     {
 	Result retVal = null;
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
 	try {
-	    Cacher.flushApplicationCache();
-	    // fetch page
-	    
-	    String language = Form.form().bindFromRequest().get("language");
-	    Long pageId = UrlRouter.getTranslatedIdForMasterId(id, language);
-	    if (pageId != null) {
-		Page page = BlockRepository.findPageById(pageId);
-		boolean fullPage = !UrlRouter.findChildPagesForId(page.getId());
-		PageManager.deletePage(page, fullPage);
-	    }
+	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
+		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
+		jsonObject.put("ok", false);
+		jsonObject.put("error", "This is a demo version. Delete is not supported");
+		retVal = ok(toJson(jsonObject));
+	    } else {
+		Cacher.flushApplicationCache();
+		// fetch page
 
-	    jsonObject.put("ok", true);
-	    retVal = ok(toJson(jsonObject));
+		String language = Form.form().bindFromRequest().get("language");
+		Long pageId = UrlRouter.getTranslatedIdForMasterId(id, language);
+		if (pageId != null) {
+		    Page page = BlockRepository.findPageById(pageId);
+		    boolean fullPage = !UrlRouter.findChildPagesForId(page.getId());
+		    PageManager.deletePage(page, fullPage);
+		}
+
+		jsonObject.put("ok", true);
+		retVal = ok(toJson(jsonObject));
+	    }
 	} catch (Exception e) {
 	    jsonObject.put("error", "An error occured. Page could not be deleted: " + e.getMessage());
-	    jsonObject.put("false", true);
+	    jsonObject.put("ok", false);
 	    retVal = ok(toJson(jsonObject));
 	}
 	UrlRouter.resetUrlMaps();
@@ -117,30 +128,36 @@ public class PageAdminController extends Controller
 	return retVal;
     }
 
-
     public static Result changeTitleDialog(Long id)
     {
 	Page page = BlockRepository.findPageById(id);
 	return ok(com.beligum.cms.views.html.modal.change_title.render(page));
     }
 
-
     public static Result changeTitle(Long id)
     {
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
 	Result retVal = null;
 	try {
-	    String language = Form.form().bindFromRequest().get("language");
-	    id = UrlRouter.getTranslatedIdForMasterId(id, language);
-	    Page page = BlockRepository.findPageById(id);
-	    String title = Form.form().bindFromRequest().get("title");
-	    page.setTitle(title);
-	    BasicRepository.update(page);
-	    jsonObject.put("status", "Title updated.");
-	    retVal = ok(toJson(jsonObject));
+	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
+		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
+		jsonObject.put("ok", false);
+		jsonObject.put("error", "This is a demo version. You can not change the title.");
+		retVal = ok(toJson(jsonObject));
+	    } else {
+		String language = Form.form().bindFromRequest().get("language");
+		id = UrlRouter.getTranslatedIdForMasterId(id, language);
+		Page page = BlockRepository.findPageById(id);
+		String title = Form.form().bindFromRequest().get("title");
+		page.setTitle(title);
+		BasicRepository.update(page);
+		jsonObject.put("ok", true);
+		jsonObject.put("status", "Title updated.");
+		retVal = ok(toJson(jsonObject));
+	    }
 
 	} catch (Exception e) {
-	    jsonObject.put("status", "Error: Title could not be saved.");
+	    jsonObject.put("error", "Error: Title could not be saved.");
 	    retVal = ok(toJson(jsonObject));
 	}
 	return retVal;
@@ -148,7 +165,7 @@ public class PageAdminController extends Controller
 
     public static Result changeUrlDialog(Long id)
     {
-	//Page page = BlockRepository.findPageById(id);
+	// Page page = BlockRepository.findPageById(id);
 	String language = Form.form().bindFromRequest().get("language");
 	List<Page> parentPages = UrlRouter.findTranslatedParentPagesByMasterId(id, language);
 
@@ -162,31 +179,38 @@ public class PageAdminController extends Controller
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
 	Result retVal = null;
 	try {
-	    Page page = BlockRepository.findPageById(id);
-	    String url = Form.form().bindFromRequest().get("url");
-	    String language = Form.form().bindFromRequest().get("language");
-	    // parse array
-	    JsonNode jsonNode = play.libs.Json.parse(url);
-	    String[] newUrlPath = play.libs.Json.fromJson(jsonNode, String[].class);
-	    String oldUrl = PageManager.removeTrailingSlashes(UrlRouter.getUrlForMasterId(id, language));
-	    String[] oldUrlPath = oldUrl.split("/");
+	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
+		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
+		jsonObject.put("ok", false);
+		jsonObject.put("error", "This is a demo version. You can not change the url.");
+		retVal = ok(toJson(jsonObject));
+	    } else {
+		Page page = BlockRepository.findPageById(id);
+		String url = Form.form().bindFromRequest().get("url");
+		String language = Form.form().bindFromRequest().get("language");
+		// parse array
+		JsonNode jsonNode = play.libs.Json.parse(url);
+		String[] newUrlPath = play.libs.Json.fromJson(jsonNode, String[].class);
+		String oldUrl = PageManager.removeTrailingSlashes(UrlRouter.getUrlForMasterId(id, language));
+		String[] oldUrlPath = oldUrl.split("/");
 
-	    List<Page> parentPages = UrlRouter.findTranslatedParentPagesByMasterId(page.getId(), language);
-	    if (parentPages.size() == newUrlPath.length) {
-		for (int i = 0; i < parentPages.size(); i++) {
-		    Page pageToUpdate = parentPages.get(i);
-		    pageToUpdate.setUrlName(newUrlPath[i]);
-		    BasicRepository.update(pageToUpdate);
+		List<Page> parentPages = UrlRouter.findTranslatedParentPagesByMasterId(page.getId(), language);
+		if (parentPages.size() == newUrlPath.length) {
+		    for (int i = 0; i < parentPages.size(); i++) {
+			Page pageToUpdate = parentPages.get(i);
+			pageToUpdate.setUrlName(newUrlPath[i]);
+			BasicRepository.update(pageToUpdate);
+		    }
 		}
+		UrlRouter.resetUrlMaps();
+		jsonObject.put("ok", true);
+		jsonObject.put("status", "Url updated.");
+		jsonObject.put("url", UrlRouter.getUrlForMasterId(id, language));
+		retVal = ok(toJson(jsonObject));
 	    }
-	    UrlRouter.resetUrlMaps();
-	   // PageCacheRepository.moveForUrl(oldUrlPath, newUrlPath, page.getLanguage());
-	    jsonObject.put("status", "Url updated.");
-	    jsonObject.put("url",UrlRouter.getUrlForMasterId(id, language));
-	    retVal = ok(toJson(jsonObject));
 
 	} catch (Exception e) {
-	    jsonObject.put("status", "Error: Url could not be changed.");
+	    jsonObject.put("error", "Error: Url could not be changed.");
 	    retVal = ok(toJson(jsonObject));
 	}
 	return retVal;
@@ -200,33 +224,41 @@ public class PageAdminController extends Controller
 	return ok(com.beligum.cms.views.html.modal.change_template.render(page, templates));
     }
 
-
     public static Result changeTemplate(Long id)
     {
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
 	Result retVal = null;
 	try {
-	    String language = Form.form().bindFromRequest().get("language");
-	    id = UrlRouter.getTranslatedIdForMasterId(id, language);
-	    Page page = BlockRepository.findPageById(id);
-	    Long templateId = Long.parseLong(Form.form().bindFromRequest().get("templateid"));
-	    Template template = BasicRepository.find(Template.class, templateId);
-	    page.setTemplate(template);
-	    BasicRepository.update(page);
-	    jsonObject.put("status", "Template updated.");
-	    retVal = ok(toJson(jsonObject));
+	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
+		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
+		jsonObject.put("ok", false);
+		jsonObject.put("error", "This is a demo version. You can not change the template.");
+		retVal = ok(toJson(jsonObject));
+	    } else {
+		String language = Form.form().bindFromRequest().get("language");
+		id = UrlRouter.getTranslatedIdForMasterId(id, language);
+		Page page = BlockRepository.findPageById(id);
+		Long templateId = Long.parseLong(Form.form().bindFromRequest().get("templateid"));
+		Template template = BasicRepository.find(Template.class, templateId);
+		page.setTemplate(template);
+		BasicRepository.update(page);
+		jsonObject.put("ok", true);
+		jsonObject.put("status", "Template updated.");
+		retVal = ok(toJson(jsonObject));
+	    }
 
 	} catch (Exception e) {
-	    jsonObject.put("status", "Error: Template could not be saved.");
+	    jsonObject.put("error", "Error: Template could not be saved.");
 	    retVal = ok(toJson(jsonObject));
 	}
 	return retVal;
     }
-    
-    public static Result resetCache() {
-   	Cacher.flushApplicationCache();
-   	UrlRouter.resetUrlMaps();
-   	return ok("");
-       }
+
+    public static Result resetCache()
+    {
+	Cacher.flushApplicationCache();
+	UrlRouter.resetUrlMaps();
+	return ok("");
+    }
 
 }

@@ -114,7 +114,10 @@ t.admin = new (Class.extend
 		$.post(jsRoutes.com.beligum.cms.controllers.admin.PageAdminController.changeTitle(cms.core.pageId).absoluteURL(), {title: title, language: cms.core.language})
 		.done(function(data) { 
 			$(".modal").modal("hide"); 
-			document.title = title
+				document.title = title
+			if (!data.ok) {
+				cms.modal.createModal("Error", data.error, "Ok", null);
+			}
 			});
 	},
 	
@@ -134,7 +137,11 @@ t.admin = new (Class.extend
 		$.post(jsRoutes.com.beligum.cms.controllers.admin.PageAdminController.changeUrl(cms.core.pageId).absoluteURL(), {url: JSON.stringify(url), language: cms.core.language})
 		.done(function(data) { 
 			$(".modal").modal("hide");
-			document.location.href = data.url;
+			if (data.ok) {
+				document.location.href = data.url;
+			} else {
+				cms.modal.createModal("Error", data.error, "Ok", null);
+			}
 			});
 	},
 	
@@ -150,7 +157,11 @@ t.admin = new (Class.extend
 		$.post(jsRoutes.com.beligum.cms.controllers.admin.PageAdminController.changeTemplate(cms.core.pageId).absoluteURL(), {templateid: templateid, language: cms.core.language})
 		.done(function(data) { 
 			$(".modal").modal("hide");
-			document.location.reload();
+			if (data.ok) {
+				document.location.reload();
+			} else {
+				cms.modal.createModal("Error", data.error, "Ok", null);
+			}
 			});
 	},
 	
@@ -177,14 +188,16 @@ t.admin = new (Class.extend
 			  url: jsRoutes.com.beligum.cms.controllers.admin.PageAdminController.save().absoluteURL(),
 			  data: JSON.stringify(page),
 			  type: 'POST',
-			  dataType: 'json',
-			  success: function(data) {
+			  dataType: 'json'
+			  
+			}).done(function(data) {
+				if (data.ok) {
 				  cms.modal.success("Page is successfully saved.")
-			  },
-			  error: function(data) {
-				  cms.modal.error(data.error);
-			  }
-			});
+				} else {
+					 cms.modal.error(data.error);
+				}
+			  });
+		
 		Logger.debug('Manager: save page')
 		cms.manager.activateManager();
 		
@@ -202,7 +215,7 @@ t.admin = new (Class.extend
 				if (data.ok) {
 					location.reload(true);
 				} else {
-					cms.modal.createModal("Error", data.message, "Ok", null);
+					cms.modal.createModal("Error", data.error, "Ok", null);
 				}
 			});
 	},

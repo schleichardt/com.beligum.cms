@@ -64,7 +64,7 @@ t.handle = new (Class.extend
 		$('.' + cms.config.CLASS_DROP_HANDLE_TOP).remove();
 		$('.' + cms.config.CLASS_DROP_HANDLE_BOTTOM).remove();
 		$("." + cms.config.CLASS_DROP_SELECT_HANDLE).remove();
-		$('.' + cms.config.CLASS_CONTENT).css('height', 'auto');
+		// $('.' + cms.config.CLASS_CONTENT).css('height', 'auto');
 	},
 	
 	removePaddingHandles: function() {

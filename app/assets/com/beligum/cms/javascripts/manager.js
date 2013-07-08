@@ -154,8 +154,6 @@ t.manager = new (Class.extend
 		layoutMode : function() {
 			Logger.debug("Going in layout mode");
 			cms.core.mode = cms.config.LAYOUT_MODE;
-			// We strech all the block first because images get removed while 
-			// disabling the editor and this can our calculations unstable
 			cms.core.fillColumnWithLastContent();
 			cms.core.disableEditorInstances();
 			cms.registering.createDropData();
