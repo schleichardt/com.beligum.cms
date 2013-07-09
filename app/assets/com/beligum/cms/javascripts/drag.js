@@ -36,7 +36,7 @@ t.drag = new (Class.extend
 						return false;
 					}
 					//if we clicked on a button inside the "admin container" of the block, don't start dragging the block
-					if (event.originalEvent && $(event.originalEvent.target).closest('.'+cms.layout.Manager.CLASS_CONTENT_BTN_TOOLBAR).length) {
+					if (event.originalEvent && $(event.originalEvent.target).closest('.'+cms.config.CLASS_CONTENT_BTN_TOOLBAR).length) {
 						return false;
 					}
 					
@@ -56,6 +56,7 @@ t.drag = new (Class.extend
 					
 					cms.core.hoverObject = block;
 					cms.handle.removeResizeHandles();
+					return true;
 				},
 
 				stopDrag : function(event, ui, block) {

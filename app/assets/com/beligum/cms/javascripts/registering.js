@@ -91,7 +91,7 @@ t.registering = new (Class.extend
 							top : 0
 						},
 						start : function(event, ui) {
-							cms.drag.startDrag(event, ui, $(this));
+							return cms.drag.startDrag(event, ui, $(this));
 						},
 
 						drag : function(event, ui) {

@@ -71,14 +71,9 @@ public class PageAdminController extends Controller
 	Request request = play.mvc.Controller.request();
 	JsonNode jsonNode = request.body().asJson();
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
-	Result retVal = null;
+	Result retVal = checkDemoMode("Saving is not supported.");
 	try {
-	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
-		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
-		jsonObject.put("ok", false);
-		jsonObject.put("error", "This is a demo version. Saving is not supported");
-		retVal = ok(toJson(jsonObject));
-	    } else {
+	    if (retVal == null) {
 		Page updatedPage = play.libs.Json.fromJson(jsonNode, Page.class);
 		Page savedPage = PageManager.savePage(updatedPage);
 		jsonObject.put("ok", true);
@@ -95,15 +90,10 @@ public class PageAdminController extends Controller
 
     public static Result deletePage(Long id)
     {
-	Result retVal = null;
+	Result retVal = checkDemoMode("Delete is not supported.");
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
 	try {
-	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
-		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
-		jsonObject.put("ok", false);
-		jsonObject.put("error", "This is a demo version. Delete is not supported");
-		retVal = ok(toJson(jsonObject));
-	    } else {
+	    if (retVal == null) {
 		Cacher.flushApplicationCache();
 		// fetch page
 
@@ -137,14 +127,9 @@ public class PageAdminController extends Controller
     public static Result changeTitle(Long id)
     {
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
-	Result retVal = null;
+	Result retVal = checkDemoMode("You can not change the title.");
 	try {
-	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
-		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
-		jsonObject.put("ok", false);
-		jsonObject.put("error", "This is a demo version. You can not change the title.");
-		retVal = ok(toJson(jsonObject));
-	    } else {
+	    if (retVal == null) {
 		String language = Form.form().bindFromRequest().get("language");
 		id = UrlRouter.getTranslatedIdForMasterId(id, language);
 		Page page = BlockRepository.findPageById(id);
@@ -177,14 +162,9 @@ public class PageAdminController extends Controller
 	Request request = play.mvc.Controller.request();
 	// JsonNode jsonNode = request.body().asJson();
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
-	Result retVal = null;
+	Result retVal = checkDemoMode("You can not change the url.");
 	try {
-	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
-		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
-		jsonObject.put("ok", false);
-		jsonObject.put("error", "This is a demo version. You can not change the url.");
-		retVal = ok(toJson(jsonObject));
-	    } else {
+	    if (retVal == null) {
 		Page page = BlockRepository.findPageById(id);
 		String url = Form.form().bindFromRequest().get("url");
 		String language = Form.form().bindFromRequest().get("language");
@@ -227,14 +207,9 @@ public class PageAdminController extends Controller
     public static Result changeTemplate(Long id)
     {
 	Map<String, Object> jsonObject = new HashMap<String, Object>();
-	Result retVal = null;
+	Result retVal = checkDemoMode("You can not change the template.");
 	try {
-	    if (play.Play.application().configuration().getBoolean("com.beligum.cms.demo") &&
-		User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
-		jsonObject.put("ok", false);
-		jsonObject.put("error", "This is a demo version. You can not change the template.");
-		retVal = ok(toJson(jsonObject));
-	    } else {
+	    if (retVal == null) {
 		String language = Form.form().bindFromRequest().get("language");
 		id = UrlRouter.getTranslatedIdForMasterId(id, language);
 		Page page = BlockRepository.findPageById(id);
@@ -259,6 +234,25 @@ public class PageAdminController extends Controller
 	Cacher.flushApplicationCache();
 	UrlRouter.resetUrlMaps();
 	return ok("");
+    }
+
+    private static Result checkDemoMode(String message)
+    {
+	Result retVal = null;
+	boolean demo = false;
+	try {
+	    demo = play.Play.application().configuration().getBoolean("com.beligum.cms.demo");
+	} catch (Exception e) {
+	    demo = false;
+	}
+
+	if (demo && User.getCurrentUser().getEmail().toLowerCase().equals("demo")) {
+	    Map<String, Object> jsonObject = new HashMap<String, Object>();
+	    jsonObject.put("ok", false);
+	    jsonObject.put("error", "This is a demo version. " + message);
+	    retVal = ok(toJson(jsonObject));
+	}
+	return retVal;
     }
 
 }
