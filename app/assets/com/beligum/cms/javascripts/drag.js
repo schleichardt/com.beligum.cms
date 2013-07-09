@@ -35,6 +35,11 @@ t.drag = new (Class.extend
 							|| cms.block.isLastBlockInWindow(block)) {
 						return false;
 					}
+					//if we clicked on a button inside the "admin container" of the block, don't start dragging the block
+					if (event.originalEvent && $(event.originalEvent.target).closest('.'+cms.layout.Manager.CLASS_CONTENT_BTN_TOOLBAR).length) {
+						return false;
+					}
+					
 					$("body").css("cursor", "move");
 					// Move the draghelper to the body so absolute position is always absolute to page
 					$("body").append($("#drag-helper"));

@@ -55,12 +55,12 @@ t.registering = new (Class.extend
 				registerContentButtons : function() {
 					Logger.debug("Registering content buttons")
 					$("." + cms.config.CLASS_REMOVE_CONTENT).on("click",
-							function() {
+							function(event) {
 								cms.actions.removeBlockBtnClicked($(this));
 							});
 
 					$("." + cms.config.CLASS_ADD_CONTENT).on("click",
-							function() {
+							function(event) {
 								cms.actions.addBlockBtnClicked($(this));
 
 							});
@@ -87,7 +87,7 @@ t.registering = new (Class.extend
 						// helper: "clone",
 						// revert: true,
 						cursorAt : {
-							left : 0,
+							left : -15,
 							top : 0
 						},
 						start : function(event, ui) {

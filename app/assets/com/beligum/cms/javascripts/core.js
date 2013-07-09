@@ -156,10 +156,8 @@ t.core = new (Class.extend
 			// for each row find the talles column
 			// set height for other columns in that row to the same height
 			
-			$("." + cms.config.CLASS_ROW).height("auto");
-			$("." + cms.config.CLASS_COLUMN).height("auto");
-			$("." + cms.config.CLASS_CONTENT).height("auto");
-
+			$("." + cms.config.CLASS_BLOCK).css('height', '');
+				
 			$("." + cms.config.CLASS_WINDOW).each(function() {
 				cms.core.stretchBlocksToMaxHeight($(this));
 			});
@@ -204,6 +202,10 @@ t.core = new (Class.extend
 				if (diffHeight > 0) {
 					element.height(element.height() + diffHeight);
 				}
+			} else {
+				// fix height temporarily so no suprises can happen while dragging
+				element.height(element.height());
+				
 			}
 		}
 
